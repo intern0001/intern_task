@@ -30,13 +30,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.0.5
+          terraform_version: 1.5.7
           terraform_wrapper: false
 
       - name: Setup Terragrunt
         uses: autero1/action-terragrunt@v1.1.0
         with:
-          terragrunt_version: 0.35.12
+          terragrunt_version: 0.51.1
       - name: Terragrunt Init
         id: init
         run: terragrunt run-all init
