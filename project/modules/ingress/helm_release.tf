@@ -1,13 +1,17 @@
 # Define a Helm release resource for nginx-ingress-controller
-resource "helm_release" "nginx_ingress" {
-  name       = "nginx-ingress-controller"
-  version    = "9.7.8"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "nginx-ingress-controller"
+module "nginx-controller" {
+  source  = "terraform-iaac/nginx-controller/helm"
 
-  set {
-    name  = "service.type"
-    value = "LoadBalancer"
-  }
-
+  additional_set = [
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+      value = "nlb"
+      type  = "string"
+    },
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-cross-zone-load-balancing-enabled"
+      value = "true"
+      type  = "string"
+    }
+  ]
 }
